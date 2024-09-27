@@ -12,10 +12,10 @@ Monsieur MOREL m'a dit : "de ne pas séparer les fonctions de l'automate et de l
 
 import re
 
-dico = {}                                              # Création du dictionnaire à partir d'un fichier texte.
-with open('dico.txt', 'r', encoding='utf-8') as file:
+dico = {}  # Création du dictionnaire à partir d'un fichier texte.
+with open("dico.txt", "r", encoding="utf-8") as file:
     for line in file:
-        key, value = line.strip().split(' ')
+        key, value = line.strip().split(" ")
         dico[key.strip()] = int(value.strip())
 
 
@@ -34,26 +34,25 @@ table_de_transition = [
 ]
 
 
-def val(mot):
-    """
-    Cette fonction prend en paramètre un mot et renvoie la valeur associée à ce mot dans le dictionnaire.
-    """
-    return dico[mot]
-
-
 def automate(phrase):
+    """Ce programme est un automate qui vérifie si une phrase est correcte ou non.
+
+    Args:
+        phrase (str): La phrase à vérifier.
+
+    Returns:
+        Boolean: True si la phrase est correcte, False sinon.
     """
-    Cette fonction prend en paramètre une phrase et renvoie True si la phrase est correcte et False sinon.
-    """
-    etat = 0
     
-    phrase = re.findall(r'\w+|[^\w\s]', phrase)  # On sépare les mots de la phrase en utilisant les espaces et les ponctuations.
+    etat = 0
+
+    phrase = re.findall(r"\w+|[^\w\s]", phrase)  # On sépare les mots de la phrase en utilisant les espaces et les ponctuations.
 
     for mot in phrase:
-        if val(mot) == 6:
+        if dico[mot] == 6:
             pass
         else:
-            etat = table_de_transition[etat][val(mot)]
+            etat = table_de_transition[etat][dico[mot]]
             if etat == 8:
                 return False
     return etat == 9
